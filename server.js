@@ -18,6 +18,11 @@ app.get("/", (req, res) => {
 import videoRoutes from "./routes/videos.js";
 app.use("/videos", videoRoutes);
 
+//comment
+
+import commentRoutes from "./routes/comments.js";
+//unified route
+app.use("/videos", commentRoutes);
 // Start the server and listen
 app.listen(PORT, () => {
   console.log(`The server is listening on ${BACKEND_URL}:${PORT}`);

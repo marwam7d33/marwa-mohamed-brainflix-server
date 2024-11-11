@@ -1,6 +1,6 @@
 import express from "express";
 import fs from "fs";
-import { v4 as uuid } from "uuid"; // to create a unique id
+import { v4 as uuid } from "uuid";
 const router = express.Router();
 
 //GET videos
@@ -17,8 +17,8 @@ router.route("/:id").get((req, res) => {
     const videoData = fs.readFileSync("data/video-details.json", "utf8");
     const videoDetails = JSON.parse(videoData);
 
-    console.log("Requesting video with id:", id); // Log the id you're trying to find
-    console.log("All video data:", videoDetails); // Log all the video data
+    console.log("Requesting video with id:", id);
+    console.log("All video data:", videoDetails);
 
     const singleVideo = videoDetails.find((video) => video.id === id);
 
@@ -50,7 +50,7 @@ router.post("/", (req, res) => {
     id: uuid(),
     title,
     description,
-    image: "http://localhost:8080/images/Upload-video-preview.jpg", // Hardcoded image path
+    image: "http://localhost:8080/images/Upload-video-preview.jpg",
     views: 0,
     likes: 0,
     comments: [],
@@ -59,7 +59,6 @@ router.post("/", (req, res) => {
   videos.push(newVideo);
   fs.writeFileSync("data/video-details.json", JSON.stringify(videos, null, 2));
 
-  // Respond with the new video data
   res.status(201).json(newVideo);
 });
 
