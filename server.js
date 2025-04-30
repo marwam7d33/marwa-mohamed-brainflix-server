@@ -8,6 +8,8 @@ const { PORT, BACKEND_URL, CORS_ORIGIN } = process.env;
 const allowedOrigin = CORS_ORIGIN || "http://localhost:5173";  // Default to local if CORS_ORIGIN is not set
 
 // Middleware to handle CORS and JSON data
+console.log("CORS_ORIGIN from .env:", CORS_ORIGIN);
+console.log("Allowed Origin used for CORS:", allowedOrigin);
 app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 app.use(express.static("public")); // Serve static files like images from the 'public' folder
