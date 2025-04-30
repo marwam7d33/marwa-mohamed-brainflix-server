@@ -4,8 +4,11 @@ import "dotenv/config";
 const app = express();
 const { PORT, BACKEND_URL, CORS_ORIGIN } = process.env;
 
+// Fallback to allow all origins in development
+const allowedOrigin = CORS_ORIGIN || "http://localhost:5173";  // Default to local if CORS_ORIGIN is not set
+
 // Middleware to handle CORS and JSON data
-app.use(cors({ origin: CORS_ORIGIN }));
+app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 app.use(express.static("public")); // Serve static files like images from the 'public' folder
 
