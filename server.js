@@ -5,12 +5,26 @@ const app = express();
 const { PORT, BACKEND_URL, CORS_ORIGIN } = process.env;
 
 // Fallback to allow all origins in development
-const allowedOrigin = CORS_ORIGIN || "http://localhost:5173";  // Default to local if CORS_ORIGIN is not set
+// const allowedOrigin = CORS_ORIGIN || "http://localhost:5173";  // Default to local if CORS_ORIGIN is not set
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://marwa-mohamed-brainflix.onrender.com"
+];
 
 // Middleware to handle CORS and JSON data
-console.log("CORS_ORIGIN from .env:", CORS_ORIGIN);
-console.log("Allowed Origin used for CORS:", allowedOrigin);
-app.use(cors({ origin: allowedOrigin }));
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  }
+}));
+
+// app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 app.use(express.static("public")); // Serve static files like images from the 'public' folder
 
